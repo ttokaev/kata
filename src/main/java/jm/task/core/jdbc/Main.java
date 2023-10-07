@@ -17,7 +17,7 @@ public class Main {
         service.saveUser("Name4", "LastName4", (byte) 38);
 
         service.removeUserById(1);
-        service.getAllUsers();
+        System.out.println(service.getAllUsers());
         service.cleanUsersTable();
         service.dropUsersTable();
     }

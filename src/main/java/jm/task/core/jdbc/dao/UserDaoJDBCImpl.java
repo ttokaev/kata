@@ -19,8 +19,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        try (Connection conn = Util.getConnection()) {
+        try (Connection conn = Util.getConnection()){
+            conn.setAutoCommit(false);
             conn.createStatement().execute(Constants.CREATE_TABLE_USER);
+            conn.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +30,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Connection conn = Util.getConnection()) {
+            conn.setAutoCommit(false);
             conn.createStatement().execute(Constants.DROP_TABLE_USER);
+            conn.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -36,7 +40,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (Connection conn = Util.getConnection()) {
+            conn.setAutoCommit(false);
             conn.createStatement().execute(String.format(Constants.INSERT_INTO_USER, name, lastName, age));
+            conn.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +50,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try (Connection conn = Util.getConnection()) {
+            conn.setAutoCommit(false);
             conn.createStatement().execute(String.format(Constants.DELETE_FROM_USER, id));
+            conn.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +78,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Connection conn = Util.getConnection()) {
+            conn.setAutoCommit(false);
             conn.createStatement().execute(String.format(Constants.DELETE_TABLE_USER));
+            conn.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
